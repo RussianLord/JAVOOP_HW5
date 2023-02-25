@@ -3,6 +3,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Server {
@@ -23,38 +25,57 @@ public class Server {
             DataInputStream infoIn = new DataInputStream(serverInterface.getInputStream());
 
             while (true){
-                int clientRequest = infoIn.read();
-                System.out.print("Что требуется сделать?");
-                System.out.print("[1] Посмотреть сотрудника; [2] Удалить сотрудника; " +
-                        "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
-//                if(clientRequest.equals("Стоп")) break;
-                if(clientRequest == 1){
+                String clientRequest = infoIn.readUTF();
+
+                if(clientRequest.equals("Стоп")) break;
+                if(Integer.parseInt(clientRequest)==1){
                     infoOut.writeUTF("Введите ID сотрудника... ");
-                    int idNum = infoIn.read();
+                    int idNum = Integer.parseInt(infoIn.readUTF());
                     for (Stuff id: businessCo) {
                         if(idNum==id.getId()){
-                            infoOut.writeUTF(id.getInfo());
-
+                            infoOut.writeUTF(id.getInfo()+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
+                                    "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
                         }
                     }
-                } else if (clientRequest == 2) {
+
+
+                } else if (Integer.parseInt(clientRequest)==2) {
                     infoOut.writeUTF("Введите ID сотрудника для удаления... ");
-                    int idNum = infoIn.read();
+                    int idNum = Integer.parseInt(infoIn.readUTF());
                     for (Stuff id: businessCo) {
                         if(idNum==id.getId()){
                             businessCo.removeStuff(idNum);
-                            infoOut.writeUTF("Сотрудник: " + id.getFirstName() + " " + id.getSecondName() + " удалён.");
+                            infoOut.writeUTF("Сотрудник: " + id.getFirstName() + " " + id.getSecondName() + " удалён."+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
+                                    "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
 
                         }
                     }
-                } else if (clientRequest == 3) {
-                    int scanID = scanner.nextInt();
-                    int scanSalary = scanner.nextInt();
-                    int scanAge = scanner.nextInt();
-                    String scanPosition = scanner.next();
-                    String scanFirstName = scanner.next();
-                    String scanSecondName = scanner.next();
-                    Stuff nameScan = new Stuff(scanID,scanPosition,scanSalary,scanFirstName,scanSecondName,scanAge);
+                } else if (Integer.parseInt(clientRequest)==3) {
+                    int scanID = businessCo.listSize();
+                    infoOut.writeUTF("Введите должность сотрудника");
+                    String scanPosition = infoIn.readUTF();
+                    infoOut.writeUTF("Введите имя сотрудника");
+                    String scanFirstName = infoIn.readUTF();
+                    infoOut.writeUTF("Введите фамилию сотрудника");
+                    String scanSecondName = infoIn.readUTF();
+                    infoOut.writeUTF("Введите зарплату сотрудника");
+                    int scanSalary = Integer.parseInt(infoIn.readUTF());
+                    infoOut.writeUTF("Введите возраст сотрудника");
+                    int scanAge = Integer.parseInt(infoIn.readUTF());
+                    businessCo.listAdd(new Stuff(scanID,scanPosition,scanSalary,scanFirstName,scanSecondName,scanAge));
+                    infoOut.writeUTF("Добавлен сотрудник: "+scanFirstName+" "+scanSecondName+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
+                            "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
+                } else if (Integer.parseInt(clientRequest)==4) {
+                    String listPer = "";
+                    for (Stuff it: businessCo) {
+                        listPer += it.getInfo()+"\n";
+                    }
+                    infoOut.writeUTF(listPer+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;"+
+                            "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
+                }
+                else {
+                    infoOut.writeUTF("Некорректный ввод!!!\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;"+
+                            "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
                 }
             }
         } catch (IOException e) {

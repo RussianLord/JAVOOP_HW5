@@ -11,20 +11,12 @@ public class Company implements Iterable<Stuff> {
 
     public void getList() {
         for (Stuff stuff : listPersonal) {
-            stuff.getInfo();
+            System.out.println(stuff.getInfo());
         }
     }
 
-    public List<Stuff> removeStuff(int id) {
-        for (Stuff stuff : listPersonal) {
-            if (id == stuff.getId()) {
-                System.out.println("Сотрудник: " + stuff.getFirstName() + " " + stuff.getSecondName() + " удалён.");
-                listPersonal.remove(stuff);
-                return listPersonal;
-            }
-        }
-        System.out.println("Нет такого сотрудника");
-        return null;
+    public void removeStuff(int id) {
+        listPersonal.remove(checkPerson(id));
     }
 
     @Override
@@ -43,5 +35,9 @@ public class Company implements Iterable<Stuff> {
         return null;
     }
 
+    public int listSize(){
+        int size = listPersonal.size()+1;
+        return size;
+    }
 
 }

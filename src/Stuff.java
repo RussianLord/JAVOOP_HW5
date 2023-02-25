@@ -14,14 +14,6 @@ public class Stuff {
         this.secondName = secondName;
         this.age = age;
     }
-    public void installStuff(int id, String position, int salary, String firstName, String secondName, int age){
-        this.id = id;
-        this.position = position;
-        this.salary = salary;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.age = age;
-    }
     public String getPosition() {
         return position;
     }

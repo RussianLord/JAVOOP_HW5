@@ -7,21 +7,23 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Stuff ivan = new Director(1,"Директор",10000,"Иван","Петров",30,12);
         Stuff oleg = new Accounter(2,"Бухгалтер",20000,"Олег","Иванов",40,"Microsoft");
         Stuff anton = new Worker(3,"Механик",15000,"Антон","Сидоров",27);
+
         Company businessCo = new Company();
         businessCo.listAdd(ivan);
         businessCo.listAdd(oleg);
         businessCo.listAdd(anton);
         businessCo.getList();
+
         System.out.println("Введи id");
-        Scanner scanner = new Scanner(System.in);
         int idSt = scanner.nextInt();
         businessCo.removeStuff(idSt);
         businessCo.getList();
         ivan.setPosition("Генеральный директор");
-        ivan.getInfo();
+        System.out.println(ivan.getInfo());
 
 
 
