@@ -14,7 +14,14 @@ public class Stuff {
         this.secondName = secondName;
         this.age = age;
     }
-
+    public void installStuff(int id, String position, int salary, String firstName, String secondName, int age){
+        this.id = id;
+        this.position = position;
+        this.salary = salary;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.age = age;
+    }
     public String getPosition() {
         return position;
     }
@@ -59,8 +66,8 @@ public class Stuff {
         return id;
     }
 
-    public void getInfo(){
-        System.out.println("ID" + id+". Имя: "+firstName+". Фамилия: "+secondName+". Возраст: "+age+"г/л. Должность: "+
-                position+ ". Зарплата: "+salary);
+    public String getInfo(){
+        return "ID" + id+". Имя: "+firstName+". Фамилия: "+secondName+". Возраст: "+age+"г/л. Должность: "+
+                position+ ". Зарплата: "+salary;
     }
 }
