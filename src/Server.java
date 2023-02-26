@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        Stuff ivan = new Director(1,"Директор",10000,"Иван","Петров",30,12);
-        Stuff oleg = new Accounter(2,"Бухгалтер",20000,"Олег","Иванов",40,"Microsoft");
-        Stuff anton = new Worker(3,"Механик",15000,"Антон","Сидоров",27);
+        Stuff ivan = new Director("Директор",10000,"Иван","Петров",30,12);
+        Stuff oleg = new Accounter("Бухгалтер",20000,"Олег","Иванов",40,"Microsoft");
+        Stuff anton = new Worker("Механик",15000,"Антон","Сидоров",27);
         Company businessCo = new Company();
         businessCo.listAdd(ivan);
         businessCo.listAdd(oleg);
@@ -51,7 +51,6 @@ public class Server {
                         }
                     }
                 } else if (Integer.parseInt(clientRequest)==3) {
-                    int scanID = businessCo.listSize();
                     infoOut.writeUTF("Введите должность сотрудника");
                     String scanPosition = infoIn.readUTF();
                     infoOut.writeUTF("Введите имя сотрудника");
@@ -62,7 +61,7 @@ public class Server {
                     int scanSalary = Integer.parseInt(infoIn.readUTF());
                     infoOut.writeUTF("Введите возраст сотрудника");
                     int scanAge = Integer.parseInt(infoIn.readUTF());
-                    businessCo.listAdd(new Stuff(scanID,scanPosition,scanSalary,scanFirstName,scanSecondName,scanAge));
+                    businessCo.listAdd(new Stuff(scanPosition,scanSalary,scanFirstName,scanSecondName,scanAge));
                     infoOut.writeUTF("Добавлен сотрудник: "+scanFirstName+" "+scanSecondName+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
                             "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
                 } else if (Integer.parseInt(clientRequest)==4) {

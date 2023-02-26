@@ -6,8 +6,8 @@ public class Stuff {
     private String secondName;
     private int age;
 
-    public Stuff(int id, String position, int salary, String firstName, String secondName, int age) {
-        this.id = id;
+    public Stuff(String position, int salary, String firstName, String secondName, int age) {
+        this.id = idInstall.getId();
         this.position = position;
         this.salary = salary;
         this.firstName = firstName;
@@ -19,6 +19,7 @@ public class Stuff {
     }
 
     public void setPosition(String position) {
+
         this.position = position;
     }
 

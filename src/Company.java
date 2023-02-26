@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Company implements Iterable<Stuff> {
     }
 
     public void removeStuff(int id) {
+        System.out.println("Сотрудник: "+listPersonal.get(id).getInfo() + " был уволен");
         listPersonal.remove(checkPerson(id));
     }
 
@@ -33,11 +35,6 @@ public class Company implements Iterable<Stuff> {
         }
         System.out.println("Нет такого сотрудника");
         return null;
-    }
-
-    public int listSize(){
-        int size = listPersonal.size()+1;
-        return size;
     }
 
 }

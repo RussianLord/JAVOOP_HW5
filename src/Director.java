@@ -1,8 +1,8 @@
 public class Director extends Stuff{
     private int parkingNumber;
 
-    public Director(int id, String position, int salary, String firstName, String secondName, int age, int parkingNumber) {
-        super(id, position, salary, firstName, secondName, age);
+    public Director(String position, int salary, String firstName, String secondName, int age, int parkingNumber) {
+        super(position, salary, firstName, secondName, age);
         this.parkingNumber = parkingNumber;
     }
 
