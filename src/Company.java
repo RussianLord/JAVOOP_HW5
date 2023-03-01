@@ -17,7 +17,7 @@ public class Company implements Iterable<Stuff> {
     }
 
     public void removeStuff(int id) {
-        System.out.println("Сотрудник: "+listPersonal.get(id).getInfo() + " был уволен");
+        System.out.println("Сотрудник: "+listPersonal.get(id-1).getInfo() + " был уволен");
         listPersonal.remove(checkPerson(id));
     }
 

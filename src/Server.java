@@ -16,7 +16,6 @@ public class Server {
         businessCo.listAdd(ivan);
         businessCo.listAdd(oleg);
         businessCo.listAdd(anton);
-        Scanner scanner = new Scanner(System.in);
         try (ServerSocket serverPart = new ServerSocket(666)){
             System.out.println("Сервер запущен... Ожидаем подключение клиента...");
             Socket serverInterface = serverPart.accept();
@@ -42,14 +41,14 @@ public class Server {
                 } else if (Integer.parseInt(clientRequest)==2) {
                     infoOut.writeUTF("Введите ID сотрудника для удаления... ");
                     int idNum = Integer.parseInt(infoIn.readUTF());
-                    for (Stuff id: businessCo) {
-                        if(idNum==id.getId()){
-                            businessCo.removeStuff(idNum);
-                            infoOut.writeUTF("Сотрудник: " + id.getFirstName() + " " + id.getSecondName() + " удалён."+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
-                                    "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
 
-                        }
-                    }
+                            businessCo.removeStuff(idNum);
+                            infoOut.writeUTF("Заебок");
+//                            infoOut.writeUTF("Сотрудник: " + id.getFirstName() + " " + id.getSecondName() + " удалён."+"\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
+//                                    "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
+
+
+
                 } else if (Integer.parseInt(clientRequest)==3) {
                     infoOut.writeUTF("Введите должность сотрудника");
                     String scanPosition = infoIn.readUTF();

@@ -21,6 +21,8 @@ public class Main {
         System.out.println("Введи id сотрудника для удаления...");
         int idSt = scanner.nextInt();
         businessCo.removeStuff(idSt);
+        businessCo.removeStuff(idSt);
+        businessCo.removeStuff(idSt);
         businessCo.getList();
 //        System.out.println("");
 //        ivan.setPosition("Генеральный директор");
