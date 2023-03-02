@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class Client implements BasicText {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         try (Socket clientPart = new Socket("localhost", 666)) {
             DataInputStream infoIn = new DataInputStream(clientPart.getInputStream());
             DataOutputStream infoOut = new DataOutputStream(clientPart.getOutputStream());
             System.out.println("Что требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
-                    "[3] Добавить сотрудника; [4] Посмотреть список сотрудников");
+                    "[3] Добавить сотрудника; [4] Посмотреть список сотрудников; [5] Внести изменения");
             while (true) {
                 String idSt = scanner.nextLine();
                 infoOut.writeUTF(idSt);

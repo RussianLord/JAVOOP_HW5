@@ -45,7 +45,7 @@ public class Server implements BasicText {
                     }
                     businessCo.removeStuff(idNum);
                 } else if (Integer.parseInt(clientRequest) == 3) {
-                    infoOut.writeUTF("Кого нужно добавить? [1] Начальство; [2] Бухгалтерия; [3] Рабочий");
+                    infoOut.writeUTF("Кого нужно добавить?\n[1] Начальство; [2] Бухгалтерия; [3] Рабочий");
                     serverInfo.addPersonal(infoOut, infoIn, businessCo, serverInfo);
                 } else if (Integer.parseInt(clientRequest) == 4) {
                     String listPer = "";
@@ -53,6 +53,42 @@ public class Server implements BasicText {
                         listPer += it.getInfo() + "\n";
                     }
                     infoOut.writeUTF(listPer + serverInfo.printBasic());
+                } else if (Integer.parseInt(clientRequest) == 5) {
+                    infoOut.writeUTF("Введите ID сотрудника... ");
+                    int idNum = Integer.parseInt(infoIn.readUTF());
+                    for (Stuff id : businessCo) {
+                        if (idNum == id.getId()) {
+                            infoOut.writeUTF(id.getInfo() + "\nКакие данные изменить?\n[1] Имя; [2] Фамилия" +
+                                    "; [3] Должность; [4] Зарплата; [5] Возраст");
+                            switch (Integer.parseInt(infoIn.readUTF())) {
+                                case (1):
+                                    infoOut.writeUTF("Введите данные... ");
+                                    id.setFirstName(infoIn.readUTF());
+                                    infoOut.writeUTF("Теперь сотрудника зовут "+id.getFirstName()+serverInfo.printBasic());
+                                    break;
+                                case (2):
+                                    infoOut.writeUTF("Введите данные... ");
+                                    id.setSecondName(infoIn.readUTF());
+                                    infoOut.writeUTF("Теперь фамилия сотрудника "+id.getFirstName()+": "+id.getSecondName()+serverInfo.printBasic());
+                                    break;
+                                case (3):
+                                    infoOut.writeUTF("Введите данные... ");
+                                    id.setPosition(infoIn.readUTF());
+                                    infoOut.writeUTF("Теперь должность сотрудника "+id.getFirstName()+": "+id.getPosition()+serverInfo.printBasic());
+                                    break;
+                                case (4):
+                                    infoOut.writeUTF("Введите данные... ");
+                                    id.setSalary(Integer.parseInt(infoIn.readUTF()));
+                                    infoOut.writeUTF("Теперь зарплата сотрудника "+id.getFirstName()+": "+id.getSalary()+serverInfo.printBasic());
+                                    break;
+                                case (5):
+                                    infoOut.writeUTF("Введите данные... ");
+                                    id.setAge(Integer.parseInt(infoIn.readUTF()));
+                                    infoOut.writeUTF("Теперь возраст сотрудника "+id.getFirstName()+": "+id.getAge()+serverInfo.printBasic());
+                                    break;
+                            }
+                        }
+                    }
                 } else {
                     infoOut.writeUTF("Некорректный ввод!!!" + serverInfo.printBasic());
                 }
@@ -65,7 +101,7 @@ public class Server implements BasicText {
     @Override
     public String printBasic() {
         return "\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
-                "[3] Добавить сотрудника; [4] Посмотреть список сотрудников";
+                "[3] Добавить сотрудника; [4] Посмотреть список сотрудников; [5] Внести изменения";
     }
 
     public void addPersonal(DataOutputStream infoOut, DataInputStream infoIn, Company businessCo, Server serverInfo) throws IOException {
