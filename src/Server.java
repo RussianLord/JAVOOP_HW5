@@ -45,7 +45,7 @@ public class Server implements BasicText{
                     }
                     businessCo.removeStuff(idNum);
                 } else if (Integer.parseInt(clientRequest) == 3) {
-                    infoOut.writeUTF("Кого нужно добавить? [1] Директор;[2] Бухгалтер;[3] Рабочий");
+                    infoOut.writeUTF("Кого нужно добавить? [1] Начальство; [2] Бухгалтерия; [3] Рабочий");
                     switch (Integer.parseInt(infoIn.readUTF())) {
                         case (1):
                             infoOut.writeUTF("Введите должность сотрудника");
