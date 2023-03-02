@@ -32,22 +32,30 @@ public class Server {
                 if (Integer.parseInt(clientRequest) == 1) {
                     infoOut.writeUTF("Введите ID сотрудника... ");
                     int idNum = Integer.parseInt(infoIn.readUTF());
-                    for (Stuff id : businessCo) {
-                        if (idNum == id.getId()) {
-                            infoOut.writeUTF(id.getInfo() + serverInfo.text.basicPrint());
+                    if(businessCo.haveOrNot(idNum)){
+                        for (Stuff id : businessCo) {
+                            if (idNum == id.getId()) {
+                                infoOut.writeUTF(id.getInfo()+"\n" + serverInfo.text.basicPrint());
+                            }
                         }
                     }
+                    else infoOut.writeUTF("Сотрудника с ID "+idNum+" нет в Базе данных!\n" + serverInfo.text.basicPrint());
+
                 } else if (Integer.parseInt(clientRequest) == 2) {
                     infoOut.writeUTF("Введите ID сотрудника для удаления... ");
                     int idNum = Integer.parseInt(infoIn.readUTF());
-                    for (Stuff it : businessCo) {
-                        if (idNum == it.getId()) {
-                            infoOut.writeUTF("Сотрудник: " + it.getFirstName() + " " + it.getSecondName() + " удалён." + serverInfo.text.basicPrint());
+                    if(businessCo.haveOrNot(idNum)){
+                        for (Stuff it : businessCo) {
+                            if (idNum == it.getId()) {
+                                infoOut.writeUTF("Сотрудник: " + it.getFirstName() + " " + it.getSecondName() + " удалён.\n" + serverInfo.text.basicPrint());
+                            }
                         }
                     }
+                    else infoOut.writeUTF("Сотрудника с ID "+idNum+" нет в Базе данных!\n" + serverInfo.text.basicPrint());
+
                     businessCo.removeStuff(idNum);
                 } else if (Integer.parseInt(clientRequest) == 3) {
-                    infoOut.writeUTF("Кого нужно добавить?\n[1] Начальство; [2] Бухгалтерия; [3] Рабочий");
+                    infoOut.writeUTF("Кого нужно добавить?\n[1] Начальство; [2] Бухгалтерия; [3] Рабочий\n");
                     serverInfo.addPersonal(infoOut, infoIn, businessCo, serverInfo);
                 } else if (Integer.parseInt(clientRequest) == 4) {
                     String listPer = "";
@@ -57,7 +65,12 @@ public class Server {
                     infoOut.writeUTF(listPer + serverInfo.text.basicPrint());
                 } else if (Integer.parseInt(clientRequest) == 5) {
                     infoOut.writeUTF("Введите ID сотрудника... ");
-                    serverInfo.changePersonal(infoOut,infoIn,businessCo,serverInfo);
+                    int idNum = Integer.parseInt(infoIn.readUTF());
+                    if(businessCo.haveOrNot(idNum)){
+                        serverInfo.changePersonal(idNum,infoOut,infoIn,businessCo,serverInfo);
+                    }
+                    else infoOut.writeUTF("Сотрудника с ID "+idNum+" нет в Базе данных!\n" + serverInfo.text.basicPrint());
+
 
                 } else {
                     infoOut.writeUTF("Некорректный ввод!!!" + serverInfo.text.basicPrint());
@@ -119,8 +132,7 @@ public class Server {
         }
     }
 
-    public void changePersonal(DataOutputStream infoOut, DataInputStream infoIn, Company businessCo, Server serverInfo) throws IOException {
-        int idNum = Integer.parseInt(infoIn.readUTF());
+    public void changePersonal(int idNum,DataOutputStream infoOut, DataInputStream infoIn, Company businessCo, Server serverInfo) throws IOException {
         for (Stuff id : businessCo) {
             if (idNum == id.getId()) {
                 infoOut.writeUTF(id.getInfo() + "\nКакие данные изменить?\n[1] Имя; [2] Фамилия" +

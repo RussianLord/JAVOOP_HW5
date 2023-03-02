@@ -36,5 +36,14 @@ public class Company implements Iterable<Stuff> {
         System.out.println("Нет такого сотрудника");
         return null;
     }
+    public boolean haveOrNot(int id) {
+        for (Stuff stuff : listPersonal) {
+            if (id == stuff.getId()) {
+                stuff.getInfo();
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
