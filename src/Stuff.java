@@ -14,6 +14,7 @@ public class Stuff {
         this.secondName = secondName;
         this.age = age;
     }
+
     public String getPosition() {
         return position;
     }
@@ -59,8 +60,8 @@ public class Stuff {
         return id;
     }
 
-    public String getInfo(){
-        return "ID" + id+". Имя: "+firstName+". Фамилия: "+secondName+". Возраст: "+age+"г/л. Должность: "+
-                position+ ". Зарплата: "+salary;
+    public String getInfo() {
+        return "ID" + id + ". Имя: " + firstName + ". Фамилия: " + secondName + ". Возраст: " + age + "г/л. Должность: " +
+                position + ". Зарплата: " + salary;
     }
 }
