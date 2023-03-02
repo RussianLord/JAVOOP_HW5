@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class Server implements BasicText{
+public class Server implements BasicText {
     public static void main(String[] args) throws IOException {
         Stuff ivan = new Director("Директор", 10000, "Иван", "Петров", 30, 12);
         Stuff oleg = new Accounter("Бухгалтер", 20000, "Олег", "Иванов", 40, "Microsoft");
@@ -32,7 +32,7 @@ public class Server implements BasicText{
                     int idNum = Integer.parseInt(infoIn.readUTF());
                     for (Stuff id : businessCo) {
                         if (idNum == id.getId()) {
-                            infoOut.writeUTF(id.getInfo()+serverInfo.printBasic());
+                            infoOut.writeUTF(id.getInfo() + serverInfo.printBasic());
                         }
                     }
                 } else if (Integer.parseInt(clientRequest) == 2) {
@@ -40,59 +40,13 @@ public class Server implements BasicText{
                     int idNum = Integer.parseInt(infoIn.readUTF());
                     for (Stuff it : businessCo) {
                         if (idNum == it.getId()) {
-                            infoOut.writeUTF("Сотрудник: " + it.getFirstName() + " " + it.getSecondName() + " удалён." +serverInfo.printBasic());
+                            infoOut.writeUTF("Сотрудник: " + it.getFirstName() + " " + it.getSecondName() + " удалён." + serverInfo.printBasic());
                         }
                     }
                     businessCo.removeStuff(idNum);
                 } else if (Integer.parseInt(clientRequest) == 3) {
                     infoOut.writeUTF("Кого нужно добавить? [1] Начальство; [2] Бухгалтерия; [3] Рабочий");
-                    switch (Integer.parseInt(infoIn.readUTF())) {
-                        case (1):
-                            infoOut.writeUTF("Введите должность сотрудника");
-                            String scanPosition = infoIn.readUTF();
-                            infoOut.writeUTF("Введите имя сотрудника");
-                            String scanFirstName = infoIn.readUTF();
-                            infoOut.writeUTF("Введите фамилию сотрудника");
-                            String scanSecondName = infoIn.readUTF();
-                            infoOut.writeUTF("Введите зарплату сотрудника");
-                            int scanSalary = Integer.parseInt(infoIn.readUTF());
-                            infoOut.writeUTF("Введите возраст сотрудника");
-                            int scanAge = Integer.parseInt(infoIn.readUTF());
-                            infoOut.writeUTF("Введите парковочный номер сотрудника");
-                            int scanParking = Integer.parseInt(infoIn.readUTF());
-                            businessCo.listAdd(new Director(scanPosition, scanSalary, scanFirstName, scanSecondName, scanAge, scanParking));
-                            infoOut.writeUTF("Добавлен сотрудник: " + scanFirstName + " " + scanSecondName + serverInfo.printBasic());
-                            continue;
-                        case (2):
-                            infoOut.writeUTF("Введите должность сотрудника");
-                            scanPosition = infoIn.readUTF();
-                            infoOut.writeUTF("Введите имя сотрудника");
-                            scanFirstName = infoIn.readUTF();
-                            infoOut.writeUTF("Введите фамилию сотрудника");
-                            scanSecondName = infoIn.readUTF();
-                            infoOut.writeUTF("Введите зарплату сотрудника");
-                            scanSalary = Integer.parseInt(infoIn.readUTF());
-                            infoOut.writeUTF("Введите возраст сотрудника");
-                            scanAge = Integer.parseInt(infoIn.readUTF());
-                            infoOut.writeUTF("Введите ПО для сотрудника");
-                            String scanSoft = infoIn.readUTF();
-                            businessCo.listAdd(new Accounter(scanPosition, scanSalary, scanFirstName, scanSecondName, scanAge, scanSoft));
-                            infoOut.writeUTF("Добавлен сотрудник: " + scanFirstName + " " + scanSecondName + serverInfo.printBasic());
-                            continue;
-                        case (3):
-                            infoOut.writeUTF("Введите должность сотрудника");
-                            scanPosition = infoIn.readUTF();
-                            infoOut.writeUTF("Введите имя сотрудника");
-                            scanFirstName = infoIn.readUTF();
-                            infoOut.writeUTF("Введите фамилию сотрудника");
-                            scanSecondName = infoIn.readUTF();
-                            infoOut.writeUTF("Введите зарплату сотрудника");
-                            scanSalary = Integer.parseInt(infoIn.readUTF());
-                            infoOut.writeUTF("Введите возраст сотрудника");
-                            scanAge = Integer.parseInt(infoIn.readUTF());
-                            businessCo.listAdd(new Stuff(scanPosition, scanSalary, scanFirstName, scanSecondName, scanAge));
-                            infoOut.writeUTF("Добавлен сотрудник: " + scanFirstName + " " + scanSecondName + serverInfo.printBasic());
-                    }
+                    serverInfo.addPersonal(infoOut, infoIn, businessCo, serverInfo);
                 } else if (Integer.parseInt(clientRequest) == 4) {
                     String listPer = "";
                     for (Stuff it : businessCo) {
@@ -107,12 +61,61 @@ public class Server implements BasicText{
             e.printStackTrace();
         }
     }
+
     @Override
     public String printBasic() {
         return "\nЧто требуется сделать?\n[1] Посмотреть сотрудника; [2] Удалить сотрудника;" +
                 "[3] Добавить сотрудника; [4] Посмотреть список сотрудников";
     }
-    public void addPersonal(){
 
+    public void addPersonal(DataOutputStream infoOut, DataInputStream infoIn, Company businessCo, Server serverInfo) throws IOException {
+        switch (Integer.parseInt(infoIn.readUTF())) {
+            case (1):
+                infoOut.writeUTF("Введите должность сотрудника");
+                String scanPosition = infoIn.readUTF();
+                infoOut.writeUTF("Введите имя сотрудника");
+                String scanFirstName = infoIn.readUTF();
+                infoOut.writeUTF("Введите фамилию сотрудника");
+                String scanSecondName = infoIn.readUTF();
+                infoOut.writeUTF("Введите зарплату сотрудника");
+                int scanSalary = Integer.parseInt(infoIn.readUTF());
+                infoOut.writeUTF("Введите возраст сотрудника");
+                int scanAge = Integer.parseInt(infoIn.readUTF());
+                infoOut.writeUTF("Введите парковочный номер сотрудника");
+                int scanParking = Integer.parseInt(infoIn.readUTF());
+                businessCo.listAdd(new Director(scanPosition, scanSalary, scanFirstName, scanSecondName, scanAge, scanParking));
+                infoOut.writeUTF("Добавлен сотрудник: " + scanFirstName + " " + scanSecondName + serverInfo.printBasic());
+                break;
+            case (2):
+                infoOut.writeUTF("Введите должность сотрудника");
+                scanPosition = infoIn.readUTF();
+                infoOut.writeUTF("Введите имя сотрудника");
+                scanFirstName = infoIn.readUTF();
+                infoOut.writeUTF("Введите фамилию сотрудника");
+                scanSecondName = infoIn.readUTF();
+                infoOut.writeUTF("Введите зарплату сотрудника");
+                scanSalary = Integer.parseInt(infoIn.readUTF());
+                infoOut.writeUTF("Введите возраст сотрудника");
+                scanAge = Integer.parseInt(infoIn.readUTF());
+                infoOut.writeUTF("Введите ПО для сотрудника");
+                String scanSoft = infoIn.readUTF();
+                businessCo.listAdd(new Accounter(scanPosition, scanSalary, scanFirstName, scanSecondName, scanAge, scanSoft));
+                infoOut.writeUTF("Добавлен сотрудник: " + scanFirstName + " " + scanSecondName + serverInfo.printBasic());
+                break;
+            case (3):
+                infoOut.writeUTF("Введите должность сотрудника");
+                scanPosition = infoIn.readUTF();
+                infoOut.writeUTF("Введите имя сотрудника");
+                scanFirstName = infoIn.readUTF();
+                infoOut.writeUTF("Введите фамилию сотрудника");
+                scanSecondName = infoIn.readUTF();
+                infoOut.writeUTF("Введите зарплату сотрудника");
+                scanSalary = Integer.parseInt(infoIn.readUTF());
+                infoOut.writeUTF("Введите возраст сотрудника");
+                scanAge = Integer.parseInt(infoIn.readUTF());
+                businessCo.listAdd(new Stuff(scanPosition, scanSalary, scanFirstName, scanSecondName, scanAge));
+                infoOut.writeUTF("Добавлен сотрудник: " + scanFirstName + " " + scanSecondName + serverInfo.printBasic());
+                break;
+        }
     }
 }
