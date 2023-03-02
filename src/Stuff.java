@@ -64,4 +64,5 @@ public class Stuff {
         return "ID" + id + ". Имя: " + firstName + ". Фамилия: " + secondName + ". Возраст: " + age + "г/л. Должность: " +
                 position + ". Зарплата: " + salary;
     }
+
 }
